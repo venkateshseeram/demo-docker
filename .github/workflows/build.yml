@@ -28,8 +28,10 @@ jobs:
           aws-region: ap-south-1
 
       - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
+        run: |
+          aws sts get-caller-identity
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin public.ecr.aws
+          aws ecr-public describe-repositories --repository-names demo-docker --region us-east-1
 
       - name: Get commit hash
         id: get-commit-hash
