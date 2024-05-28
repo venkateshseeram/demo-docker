@@ -25,10 +25,7 @@ jobs:
 
       - name: Build with Maven
         run: mvn clean install
-
-  AssumeRoleAndCallIdentity:
-    runs-on: ubuntu-latest
-    steps:
+        
       - name: Git clone the repository
         uses: actions/checkout@v3
       - name: configure aws credentials
