@@ -29,6 +29,12 @@ jobs:
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
 
+      - name: Log in to Amazon ECR
+        id: login-ecr
+        run: |
+          aws ecr-public get-login-password --region us-east-1 | docker login --username AWS --password-stdin    
+           
+
       - name: Get commit hash
         id: get-commit-hash
         run: echo "::set-output name=commit-hash::$(git rev-parse --short HEAD)"
