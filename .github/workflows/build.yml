@@ -22,16 +22,20 @@ jobs:
       - name: Build with Maven
         run: mvn clean install
 
-      - name: Configure AWS credentials
+  AssumeRoleAndCallIdentity:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v3
+      - name: configure aws credentials
         uses: aws-actions/configure-aws-credentials@v1.7.0
         with:
           role-to-assume: arn:aws:iam::173254080023:role/githuboidc
           role-session-name: GitHub_to_AWS_via_FederatedOIDC
           aws-region: us-east-1
-
-      - name: Debug AWS credentials
+      # Hello from AWS: WhoAmI
+      - name: Sts GetCallerIdentity
         run: |
-          echo "Checking AWS credentials..."
           aws sts get-caller-identity
 
       - name: Get commit hash
